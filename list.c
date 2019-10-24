@@ -23,6 +23,7 @@ struct node * free_list(struct node *entry){
 	if (entry->next != NULL) {
 		entry->next = free_list(entry->next);
 	}
+	free(entry);
 	//printf("DIAG: freed node %d\n", entry->data);
 	return entry->next;
 

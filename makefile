@@ -11,5 +11,16 @@ run:
 	./listfxns
 
 clean:
+	touch main.o
+	touch a.out
 	rm *.o
-	rm *.swp
+	rm a.out
+
+debug: main.c list.c headers.h
+	gcc -g main.c list.c
+
+gdb: a.out
+	gdb a.out
+
+valgrind: a.out
+	valgrind --leak-check=yes ./a.out
