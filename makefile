@@ -1,11 +1,17 @@
-all: main.o list.o
-	gcc -o listfxns main.o list.o
+ifeq ($(DEBUG), true)
+	(CC) = gcc -g
+else
+	(CC) = gcc
+endif
+
+all: main.o songs.o
+	$(CC) -o songfxns main.o songs.o
 
 main.o: main.c headers.h
-	gcc -c main.c
+	$(CC) -c main.c
 
-list.o: list.c headers.h
-	gcc -c list.c
+songs.o: songs.c headers.h
+	$(CC) -c songs.c
 
 run:
 	./listfxns
@@ -15,12 +21,3 @@ clean:
 	touch a.out
 	rm *.o
 	rm a.out
-
-debug: main.c list.c headers.h
-	gcc -g main.c list.c
-
-gdb: a.out
-	gdb a.out
-
-valgrind: a.out
-	valgrind --leak-check=yes ./a.out

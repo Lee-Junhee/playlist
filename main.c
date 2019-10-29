@@ -3,20 +3,28 @@
 #include"headers.h"
 
 int main() {
-	struct node *list = calloc(sizeof(struct node), 1);
-	printf("Printing empty list:\n");
-	print_list(list);
-	int i;
-	printf("Adding #s 0-9 to list...\n");
-	for(i = 0; i <= 9; i++){
-		list = insert_front(list, i);
-	}
-	printf("Printing list:\n");
-	print_list(list);
-	printf("Freeing list...\n");
-	free_list(list);
-	printf("Printing from reference to old list...\n");
-	print_list(list);
+	struct song_node *songs;
+	songs = create_song("Just the Way You Are", 
+			"Bruno Mars");
+	songs = insert_order(songs,
+			create_song("Marry You",
+				"Bruno Mars"));
+	songs = insert_order(songs,
+			create_song("VIP",
+				"Manic Drive"));
+	songs = insert_order(songs,
+			create_song("HandClap",
+				"Fitz and the Tantrums"));
+	songs = insert_order(songs,
+			create_song("Roll Up",
+				"Fitz and the Tantrums"));
+	songs = insert_order(songs,
+			create_song("Legend",
+				"The Score"));
+	songs = insert_order(songs,
+			create_song("Can't Hold Us",
+				"Macklemore & Ryan Lewis"));
+	print_list(songs);
 
 	return 0;
 }
