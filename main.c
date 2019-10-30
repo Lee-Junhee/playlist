@@ -30,7 +30,7 @@ int main() {
 			create_song("uptown funk",
 				"bruno mars"));
 
-	printf("\n===============\n");
+	printf("\n***************\n");
 	printf("Song Node Functions\n");
 
 	printf("\n===============\n");
@@ -68,7 +68,7 @@ int main() {
 	printf("Freed list! Remaining songs:\n");
 	print_list(songs);
 
-	printf("\n===============\n");
+	printf("\n***************\n");
 
 	printf("Song Library Functions\n");
 	printf("\n===============\n");
