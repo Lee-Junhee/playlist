@@ -17,10 +17,17 @@ struct song_node * insert_front(struct song_node *head,
 
 struct song_node * free_list(struct song_node *head);
 
+int namecmp(char *str1, char *str2);
+
 struct song_node * insert_order(struct song_node *head,
 		struct song_node *entry);
+
+struct song_node * search(struct song_node *head,
+		char *title, char *artist);
 
 struct song_node * first_song(struct song_node *head,
 		char *artist);
 
 struct song_node * rand_song(struct song_node *head);
+
+struct song_node * song_pop(struct song_node *head, struct song_node *song);

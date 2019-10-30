@@ -45,12 +45,12 @@ struct song_node * free_list(struct song_node *head) {
 	return head->next;
 }
 
-int strcicmp(char *str1, char *str2) {//case-insensitive strcmp
+int namecmp(char *str1, char *str2) {//case-insensitive strcmp
 	int char1, char2;
 	char1 = tolower(*str1++);
 	char2 = tolower(*str2++);
 	if ((char1 == char2) * (char1 != NULL)) {
-		return strcicmp(str1, str2);
+		return namecmp(str1, str2);
 	}
 	return char1 - char2;
 }
@@ -60,13 +60,13 @@ struct song_node * insert_order(struct song_node *head,
 	if (head == NULL) {
 		return entry;
 	}
-	int cmp = strcicmp(head->artist, entry->artist);
+	int cmp = namecmp(head->artist, entry->artist);
 	if (cmp < 0) {
 		head->next = insert_order(head->next, entry);
 		return head;
 	}
 	if (cmp == 0) {
-		cmp = strcicmp(head->name, entry->name);
+		cmp = namecmp(head->name, entry->name);
 		if (cmp < 0) {
 			head->next = insert_order(head->next, entry);
 			return head;
@@ -79,9 +79,22 @@ struct song_node * insert_order(struct song_node *head,
 	return entry;
 }
 
+struct song_node * search(struct song_node *head,
+		char *title, char *artist) {
+	struct song_node *start = first_song(head, artist);
+	while (!namecmp(start->artist, artist)) {
+		if (namecmp(start->name, title)) {
+			start = start->next;
+		}else {
+			return start;
+		}
+	}
+	return NULL;
+}
+
 struct song_node * first_song(struct song_node *head,
 		char *artist) {
-	if (strcicmp(head->artist, artist) == 0) {
+	if (namecmp(head->artist, artist) == 0) {
 		return head;
 	}
 	return first_song(head->next, artist);
@@ -105,5 +118,17 @@ struct song_node * rand_song(struct song_node *head) {
 		}
 		random --;
 	}
+	return song;
+}
+
+struct song_node * song_pop(struct song_node *head, struct song_node *song) {
+	while (head->next != song) {
+		if (head->next == NULL) {
+			return NULL;
+		}
+		head = head->next;
+	}
+	head->next = song->next;
+	song->next = NULL;
 	return song;
 }
