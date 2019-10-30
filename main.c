@@ -118,9 +118,26 @@ int main() {
 	print_list(search_artist(lib, "fitz and the tantrums"));
 
 	printf("\n===============\n");
+	printf("Testing shuffle()...\n");
+	struct song_node *rand = shuffle(lib);
+	print_list(rand);
+
+	printf("\n===============\n");
 	printf("Testing song_rm('can't hold us', 'macklemore & ryan lewis')...\n");
 	song_rm(lib, "can't hold us", "macklemore & ryan lewis");
 	print_lib(lib);
+
+	printf("\n===============\n");
+	printf("Testing clear_lib()...\n");
+	clear_lib(lib);
+	print_libv(lib);
+
+	printf("\n===============\n");
+	printf("Testing del_lib()...\n");
+	del_lib(lib);
+	lib = NULL;
+	printf("Remaining library:\n");
+	print_list(lib);
 
 	return 0;
 }

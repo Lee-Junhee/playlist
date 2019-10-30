@@ -57,7 +57,7 @@ struct song_node * begins_with(struct song_node **lib, char *letter){
 			break;
 		}
 	}
-	return lib[i]->next;
+	return lib[i];
 }
 
 void print_artist(struct song_node **lib, char *artist){
@@ -82,8 +82,42 @@ void print_lib(struct song_node **lib){
 	}
 }
 
+void print_libv(struct song_node **lib){ //verbose
+	int i;
+	for(i = 0; i < 27; i++){
+		print_list(lib[i]);
+	}
+}
 
 struct song_node * shuffle(struct song_node **lib){
+	int i;
+	struct song_node *head = NULL;
+	struct song_node *temp;
+	for(i = 0; i < 27; i++){
+		if (lib[i]->next != NULL) {
+			if (head == NULL) {
+				head = lib[i]->next;
+				temp = head;
+			}else {
+				temp->next = lib[i]->next;
+			}
+			while (temp->next != NULL) {
+				temp = temp->next;	
+			}
+		}
+	}
+	struct song_node *random;
+	random = rand_song(head);
+	temp = random;
+	while (1) {
+		head = song_pop(head, temp);
+		if (head == NULL) {
+			break;
+		}
+		temp->next = rand_song(head);
+		temp = temp->next;
+	}
+	return random;
 }
 
 void song_rm(struct song_node **lib, char *title, char *artist){
@@ -94,14 +128,16 @@ void song_rm(struct song_node **lib, char *title, char *artist){
 
 void clear_lib(struct song_node **lib){
 	int i;
-	for(i = 0; i < 27; i++) {
-		free_list(lib[i]->next);
+	for(i = 26; i; i--) {
+		if (lib[i]->next != NULL) {
+			lib[i]->next = free_list(lib[i]->next);
+		}
 	}	
 }
 
 void del_lib(struct song_node **lib) {
 	int i;
-	for(i = 0; i < 27; i++) {
+	for(i = 26; i; i--) {
 		free_list(lib[i]);
 	}	
 	free(lib);

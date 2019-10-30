@@ -16,7 +16,7 @@ songlib.o: songlib.c songlib.h songnode.c songnode.h
 songnode.o: songnode.c songnode.h
 	$(CC) -c songnode.c
 
-run:
+run: all
 	./songfxns
 
 clean:
