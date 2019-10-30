@@ -31,6 +31,10 @@ struct song_node * create_song(char *name, char *artist) {
 	return song;
 }
 
+struct song_node * song_cpy(struct song_node *src) {
+	return create_song(src->name, src->artist);
+}
+
 struct song_node * insert_front(struct song_node *head,
 		struct song_node *entry) {
 	entry->next = head;
@@ -123,7 +127,9 @@ struct song_node * rand_song(struct song_node *head) {
 
 struct song_node * song_pop(struct song_node *head, struct song_node *song) {
 	if (head == song) {
-		return head->next;
+		struct song_node *temp = head->next;
+		free(head);
+		return temp;
 	}
 	head->next = song_pop(head->next, song);
 	return head;

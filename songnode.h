@@ -8,6 +8,8 @@ struct song_node {
 //functions
 struct song_node * create_song(char *name, char *artist);
 
+struct song_node * song_cpy(struct song_node *src);
+
 void print_song(struct song_node *song, char newline);
 
 void print_list(struct song_node *head);

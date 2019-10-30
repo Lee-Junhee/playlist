@@ -121,6 +121,7 @@ int main() {
 	printf("Testing shuffle()...\n");
 	struct song_node *rand = shuffle(lib);
 	print_list(rand);
+	free_list(rand);
 
 	printf("\n===============\n");
 	printf("Testing song_rm('can't hold us', 'macklemore & ryan lewis')...\n");
@@ -137,7 +138,6 @@ int main() {
 	del_lib(lib);
 	lib = NULL;
 	printf("Remaining library:\n");
-	print_list(lib);
 
 	return 0;
 }

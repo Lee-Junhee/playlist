@@ -92,32 +92,36 @@ void print_libv(struct song_node **lib){ //verbose
 struct song_node * shuffle(struct song_node **lib){
 	int i;
 	struct song_node *head = NULL;
-	struct song_node *temp;
+	struct song_node *temp, *point;
 	for(i = 0; i < 27; i++){
 		if (lib[i]->next != NULL) {
+			temp = lib[i]->next;
 			if (head == NULL) {
-				head = lib[i]->next;
-				temp = head;
-			}else {
-				temp->next = lib[i]->next;
+				head = song_cpy(lib[i]->next);
+				point = head;
+				temp = temp->next;
 			}
-			while (temp->next != NULL) {
-				temp = temp->next;	
+			while (temp != NULL) {
+				point->next = song_cpy(temp);
+				point = point->next;
+				temp = temp->next;
 			}
+
 		}
 	}
-	struct song_node *random;
-	random = rand_song(head);
-	temp = random;
+	temp = rand_song(head);
+	struct song_node *random = song_cpy(temp);
+	point = random;
 	while (1) {
 		head = song_pop(head, temp);
 		if (head == NULL) {
 			break;
 		}
-		temp->next = rand_song(head);
-		temp = temp->next;
+		temp = rand_song(head);
+		random->next = song_cpy(temp);
+		random = random->next;
 	}
-	return random;
+	return point;
 }
 
 void song_rm(struct song_node **lib, char *title, char *artist){
@@ -137,7 +141,7 @@ void clear_lib(struct song_node **lib){
 
 void del_lib(struct song_node **lib) {
 	int i;
-	for(i = 26; i; i--) {
+	for(i = 0; i <27; i++) {
 		free_list(lib[i]);
 	}	
 	free(lib);
