@@ -57,17 +57,28 @@ struct song_node * begins_with(struct song_node **lib, char *letter){
 			break;
 		}
 	}
-	return lib[i];
+	return lib[i]->next;
 }
 
 void print_artist(struct song_node **lib, char *artist){
-	print_list(search_artist(lib, artist));
+	struct song_node *head = search_artist(lib, artist);
+	while ((head != NULL) * !namecmp(head->artist, artist)) {
+		print_song(head, 0);
+		if (head-> next != NULL) {
+			head = head->next;
+		}else {
+			break;
+		}
+	}
+	printf("\n");
 }
 
 void print_lib(struct song_node **lib){
 	int i;
 	for(i = 0; i < 27; i++){
-		print_list(lib[i]);
+		if (lib[i]->next != NULL) {
+			print_list(lib[i]);
+		}
 	}
 }
 
@@ -75,10 +86,10 @@ void print_lib(struct song_node **lib){
 struct song_node * shuffle(struct song_node **lib){
 }
 
-struct song_node * song_rm(struct song_node **lib, char *title, char *artist){
+void song_rm(struct song_node **lib, char *title, char *artist){
 	struct song_node *row = begins_with(lib, artist);
 	struct song_node *element = search_song(lib, title, artist);
-	return song_pop(row, element);
+	song_pop(row, element);
 }
 
 void clear_lib(struct song_node **lib){

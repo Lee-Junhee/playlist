@@ -122,13 +122,22 @@ struct song_node * rand_song(struct song_node *head) {
 }
 
 struct song_node * song_pop(struct song_node *head, struct song_node *song) {
-	while (head->next != song) {
-		if (head->next == NULL) {
+	if (song == NULL) {
+		return NULL;
+	}
+	struct song_node *temp = head;
+	if (head == song) {
+		temp = head->next;
+		free(head);
+		return temp;
+	}
+	while (temp->next != song) {
+		if (temp->next == NULL) {
 			return NULL;
 		}
-		head = head->next;
+		temp = temp->next;
 	}
-	head->next = song->next;
-	song->next = NULL;
-	return song;
+	temp->next = song->next;
+	free(song);
+	return head;
 }
