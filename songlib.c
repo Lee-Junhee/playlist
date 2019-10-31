@@ -132,7 +132,7 @@ void song_rm(struct song_node **lib, char *title, char *artist){
 
 void clear_lib(struct song_node **lib){
 	int i;
-	for(i = 26; i; i--) {
+	for(i = 26; i + 1; i--) {
 		if (lib[i]->next != NULL) {
 			lib[i]->next = free_list(lib[i]->next);
 		}
